@@ -147,6 +147,23 @@ app.delete("/api/users/:userId", (req, res) => {
     }
 })
 
+app.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    error: {
+      success: false,
+      message: err.message,
+    },
+  });
+});
+
 app.listen(port, () => {
     console.log(`server is running on ${port} port`)
 })
