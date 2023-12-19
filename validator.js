@@ -4,7 +4,7 @@ export async function userCreateValidator(req, res, next) {
   const schema = Joi.object().keys({
     username: Joi.string().required(),
     age: Joi.number().required(),
-    hobbies: Joi.array().required(),
+    hobbies: Joi.array().items(Joi.string()).required(),
   });
 
   const { error } = await schema.validate(req.body);
